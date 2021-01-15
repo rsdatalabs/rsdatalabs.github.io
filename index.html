@@ -1,7 +1,116 @@
 <!DOCTYPE html>
 <html>
+  <head>
+  <title>Map with Filtered Data Set</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    
+    <style>
+   
+    table {
+    width: 50%;
+    }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
+ 
+<p>Search for areas with corona and other communicable diseases.</p>
+  <form id="form1" onchange="drawChart()">
+  <select id="thedropdown">
+  <option value="0">Choose Communicable Disease:</option>
+  <option value="Yes">Corona</option>
+  <option value="No">Others</option>
+</select>
+
+</form>
+    <div id="map_div"></div>
+    <table>
+    <thead><th>Trailhead</th><th>CD: Corona or Others</th></thead>
+    <tbody id="mapanswer"></tbody>
+   
+    </table>
+    
+    
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["map"]});
+      google.charts.setOnLoadCallback(drawChart);
+     
+      //data is formatted for google map
+     
+        var origData = [
+        ['Lat', 'Long', 'Name', 'Picnic'],
+        [40.00502079,-105.3065126,'Flagstaff Summit West','Yes'],
+		[12.9081357 ,77.64760799999999 ,'HSR Layout','Yes'],
+		[12.971389,77.750130,'Whitefield','Yes'],
+		[19.107491,72.90176,'Chandivali','No'],     
+        ];
+
+
+        
+        function drawChart() {
+                 
+        //form to change based on dropdown
+        
+        selection = document.getElementById("thedropdown").value; 
+        
+        //if 0 selected, maps everything
+        if(selection == "0") {
+//writes origData to html for initial view, line by line with breaks
+        for(i=1; i<origData.length; i++) {
+        document.getElementById("mapanswer").innerHTML += "<tr><td>" + origData[i][2] + "</td><td>" + origData[i][3] + "</td></tr>";
+        } // end initial for
+        
+        // creates visualization using newData array
+        var options = {
+        mapType: 'normal',
+        showInfoWindow: true,
+        }
+        
+        var data = google.visualization.arrayToDataTable(origData);
+        var map = new google.visualization.Map(document.getElementById('map_div'));
+        map.draw(data, options);
+        }
+
+        
+        // if there is a selection
+        else {
+        //start a new array to include only data that is selected
+        var newData = [['Lat', 'Long', 'Name', 'Picnic']];
+        
+        //loop to go match selection and create a new array
+        for(i=1;i<origData.length; i++) {
+            if(origData[i][3] == selection){
+            // only data that meets the selection criteria goes into newData array
+            newData.push(origData[i]);
+            
+            }//end if
+            
+            
+        }//end for
+        
+        //clears out answer div in html
+        
+        document.getElementById("mapanswer").innerHTML = " ";
+        
+        //loop that writes the data in newData, line by line with breaks.
+        for(i=1; i<newData.length; i++) {
+        document.getElementById("mapanswer").innerHTML += "<tr><td>" + newData[i][2] + "</td><td>" + newData[i][3] + "</td></tr>";
+        }
+        var options = {
+        mapType: 'normal',
+        showInfoWindow: true,
+        }
+       
+        // creates visualization using newData array
+        var data = google.visualization.arrayToDataTable(newData);
+        var map = new google.visualization.Map(document.getElementById('map_div'));
+        map.draw(data, {showTip: true});
+       
+      } // end else
+   
+      }//end function
+    </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzifNOGvmTaQ_FBsTlubKrjsHD7SI3PwA" async defer></script>
+ </body>
 </html>
+
