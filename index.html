@@ -106,8 +106,8 @@
 
       //GOOGLE CHARTS 
       // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart','line','table']});
-      //google.charts.load('current', {'packages':['table']});
+      //google.charts.load('current', {'packages':['corechart','line','table']});
+      google.charts.load('current', {'packages':['table']});
       // Set a callback to run when the Google Visualization API is loaded.
       //google.charts.setOnLoadCallback(init);
 
@@ -152,7 +152,7 @@ google.charts.setOnLoadCallback(init);
 
         var data5 = new google.visualization.DataTable();
         
-        data5.addColumn('string', 'year')        
+        data5.addColumn('string', 'City')        
         //data5.addColumn('number', 'mpg')
         //data5.addColumn('number', 'hp')        
         //data5.addColumn('number', 'cyl')
