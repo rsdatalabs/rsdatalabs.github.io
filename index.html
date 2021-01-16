@@ -16,7 +16,7 @@
         <td><div id="accel_chart_div" style="border: 1px solid #ccc"></div></td>
       
       <tr>
-       <h2>US, EU, ASIA automobile data (1970-1982)</h2>
+       <h2>Infectious Disease Spread In Indian Cities</h2>
        <div id="origin_chart_div" </div>
       </tr>  <!-- <td><div id="chart_div" style="border: 1px solid #ccc"></div></td> -->
       
@@ -53,7 +53,7 @@
       
           var obj = {};
           obj = [data.yr, Number(data.mpg)];
-          //console.log(data);
+          console.log(data);
           return obj;
         })
         
@@ -61,7 +61,7 @@
       
           var obj = {};
           obj = [data.yr, Number(data.hp)];
-          //console.log(data);
+          console.log(data);
           return obj;
         })
   
@@ -69,7 +69,7 @@
       
           var obj = {};
           obj = [data.yr, Number(data.weight)];
-          //console.log(data);
+          console.log(data);
           return obj;
         })
 
@@ -77,14 +77,15 @@
       
           var obj = {};
           obj = [data.yr, Number(data.accel)];
-          //console.log(data);
+          console.log(data);
           return obj;
         })
 
         var five = data.map(function(data){
       
           var obj = {};
-          obj = [data.yr, Number(data.mpg), Number(data.hp), Number(data.cyl), Number(data.accel), Number(data.origin), Number(data.weight), Number(data.displ), data.name];
+          //obj = [data.yr, Number(data.mpg), Number(data.hp), Number(data.cyl), Number(data.accel), Number(data.origin), Number(data.weight), Number(data.displ), data.name];
+          obj = [data.City];
           console.log(data);
           return obj;
         })
@@ -98,7 +99,8 @@
         })
 
         //pass to google charts      
-        drawChart(one,two,three,four,five,six);
+        //drawChart(one,two,three,four,five,six);
+        drawChart(five);
         
       }
 
@@ -118,7 +120,8 @@ google.charts.setOnLoadCallback(init);
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
-        function drawChart(dataStuff1,dataStuff2,dataStuff3,dataStuff4,dataStuff5,dataStuff6) {
+        //function drawChart(dataStuff1,dataStuff2,dataStuff3,dataStuff4,dataStuff5,dataStuff6) {
+        function drawChart(dataStuff5) {
         // Create the data table.
         var data1 = new google.visualization.DataTable();
         
@@ -126,45 +129,45 @@ google.charts.setOnLoadCallback(init);
 
         data1.addColumn('string', 'year')        
         data1.addColumn('number', 'MPG')
-        data1.addRows(dataStuff1);
+        //data1.addRows(dataStuff1);
         
         
         var data2 = new google.visualization.DataTable();
         
         data2.addColumn('string', 'year')        
         data2.addColumn('number', 'HP')
-        data2.addRows(dataStuff2);
+        //data2.addRows(dataStuff2);
           
         var data3 = new google.visualization.DataTable();
         
         data3.addColumn('string', 'year')        
         data3.addColumn('number', 'Weight')
-        data3.addRows(dataStuff3);
+        //data3.addRows(dataStuff3);
 
         var data4 = new google.visualization.DataTable();
         
         data4.addColumn('string', 'year')        
         data4.addColumn('number', 'Accel')
-        data4.addRows(dataStuff4);
+        //data4.addRows(dataStuff4);
 
         var data5 = new google.visualization.DataTable();
         
         data5.addColumn('string', 'year')        
-        data5.addColumn('number', 'mpg')
-        data5.addColumn('number', 'hp')        
-        data5.addColumn('number', 'cyl')
-        data5.addColumn('number', 'accel')        
-        data5.addColumn('number', 'origin')
-        data5.addColumn('number', 'weight')
-        data5.addColumn('number', 'displ')
-        data5.addColumn('string', 'name')
+        //data5.addColumn('number', 'mpg')
+        //data5.addColumn('number', 'hp')        
+        //data5.addColumn('number', 'cyl')
+        //data5.addColumn('number', 'accel')        
+        //data5.addColumn('number', 'origin')
+        //data5.addColumn('number', 'weight')
+        //data5.addColumn('number', 'displ')
+        //data5.addColumn('string', 'name')
         data5.addRows(dataStuff5);
 
         var data6 = new google.visualization.DataTable();
         
         data6.addColumn('string', 'year')        
         data6.addColumn('number', 'cyl')
-        data6.addRows(dataStuff6);
+        //data6.addRows(dataStuff6);
         
         // Set chart options Titles
 
@@ -219,16 +222,16 @@ google.charts.setOnLoadCallback(init);
 
  // Instantiate and draw our chart, passing in some options.
         var chart1 = new google.visualization.LineChart(document.getElementById('mpg_chart_div'));
-        chart1.draw(data1, options1);
+        //chart1.draw(data1, options1);
       
         var chart2 = new google.visualization.LineChart(document.getElementById('hp_chart_div'));
-        chart2.draw(data2, options2);
+        //chart2.draw(data2, options2);
 
         var chart3 = new google.visualization.LineChart(document.getElementById('weight_chart_div'));
-        chart3.draw(data3, options3);
+        //chart3.draw(data3, options3);
       
         var chart4 = new google.visualization.LineChart(document.getElementById('accel_chart_div'));
-        chart4.draw(data4, options4);
+        //chart4.draw(data4, options4);
 
         var chart5 = new google.visualization.Table(document.getElementById('origin_chart_div'));
         chart5.draw(data5, options5);
