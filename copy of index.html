@@ -1,1 +1,184 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/sheetrock.css" rel="stylesheet" type="text/css">
+    <title>Disease Surveillance</title>
+  </head>
+
+  <body data-spy="scroll" data-target="#toc">
+    <div class="container">
+        <div class="col-md-9">
+          <h1 id="about">Infectious Disease Surveillance In India</h1>
+          <p>This is an information portal that is compiled from latest social media messages on infectious diseases. At this time, feeds are from twitter.</p>
+          <noscript><p class="ermmror">This page requires JavaScript.</p></noscript>
+          <div data-language="javascript" style="display:none">
+            <!-- Load jQuery and Sheetrock from CDNJS -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sheetrock/1.1.4/dist/sheetrock.min.js"></script>
+          </div>
+          <script data-language="javascript">
+             var mySpreadsheet = 'https://docs.google.com/spreadsheets/d/1yCqPtGEOZaY_RW4sV3vjUIx7wh_huuvTnbNh2zf0N3s/edit#gid=1770404470';
+          </script>
+          <div class="operator-plus" style="display:none">
+            <pre class="language-markup"><code class="mockup">
+              <table id="statistics" class="table table-condensed table-striped"></table>
+            </code></pre>
+           <pre class="language-javascript"><code class="mockup">
+            // Load an entire worksheet.
+            $('#statistics').sheetrock({
+              url: mySpreadsheet
+            });
+          </code></pre>
+ </div>
+          
+          <div class="example-render-group">
+            <div data-language="markup" data-example-class="operator-plus">
+              <h4>Section A: Disease Intensity</h4>
+              <p>A summary of message activity for difference diseases, that show current intensity. </p>
+              <ol id="team-rbi">
+              <script id="team-rbi-template" type="text/x-handlebars-template">
+                <li><strong>{{cells.TeamName}}</strong>, {{cells.TeamRBI}}</li>
+              </script>
+              </ol>
+            </div>
+            <script data-language="javascript" data-example-class="operator-equals">
+              var RBITemplate = Handlebars.compile($('#team-rbi-template').html());
+              $('#team-rbi').sheetrock({
+                url: mySpreadsheet,
+                query: "select C,count(F) group by C order by count(F) desc",
+                fetchSize: 5,
+                labels: ['TeamName', 'TeamRBI'],
+                rowTemplate: RBITemplate
+              });
+            </script>
+          </div>
+
+            <div class="example-render-group">
+            <div data-language="markup" data-example-class="operator-plus">
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+              <h4>Section B: Location Intensity</h4>
+              <p>A summary of message activity for difference locations, that show current intensity. </p>
+              <table id="location-counts" class="table table-condensed table-striped"></table>
+            </div>
+            <script data-language="javascript" data-example-class="operator-equals">
+              // Load top ten switch hitters.
+              $('#location-counts').sheetrock({
+                url: mySpreadsheet,
+                query: "select B, count(F) group by B order by count(F) desc",
+                fetchSize: 5
+              });
+            </script>
+          </div>
+
+          
+          <div class="example-render-group">
+            <div data-language="markup" data-example-class="operator-plus" >
+              <!-- Load Handlebars.js from CloudFlare’s CDN. -->
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+            </div>
+            <div data-language="markup" data-example-class="operator-plus">
+              <h4>Section C: Latest Vaccine Related Feeds</h4>
+              <p>A feed of latest updates on vaccination. </p>
+              <ol id="hr">
+                <script id="hr-template" type="text/x-handlebars-template">
+                  <li>
+                  <strong>{{cells.City}}</strong> {{cells.Disease}}, {{cells.Date}},{{cells.Brief}}, {{cells.URL}}
+                  </li>
+                </script>
+              </ol>
+            </div>
+            <script data-language="javascript" data-example-class="operator-equals">
+              // Compile the Handlebars template for HR leaders.
+              var HRTemplate = Handlebars.compile($('#hr-template').html());
+              // Load top five HR leaders.
+              $('#hr').sheetrock({
+                url: mySpreadsheet,
+                query: "select B,C,D,F,G where F like '%Vaccine%' ",
+                fetchSize: 5,
+                rowTemplate: HRTemplate
+              });
+            </script>
+          </div>
+
+       
+                   
+          <div class="example-render-group">
+            <div data-language="markup" data-example-class="operator-plus">
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+              <h4>Section D: Latest Government Updates</h4>
+              <p>A feed of latest disease updates from government bodies such as ICMR. </p>
+              <table id="switch-hitters" class="table table-condensed table-striped"></table>
+            </div>
+            <script data-language="javascript" data-example-class="operator-equals">
+              // Load top ten switch hitters.
+              $('#switch-hitters').sheetrock({
+                url: mySpreadsheet,
+                query: "select C,B,F,E,D where E like '%ICMR%' ",
+                fetchSize: 5
+              });
+            </script>
+          </div>
+
+        <div class="example-render-group">
+            <div data-language="markup" data-example-class="operator-plus">
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+              <h4>Section E: Latest Media Updates</h4>
+              <p>A feed of latest disease updates from media groups such as Times Of India. </p>
+              <table id="media-hitters" class="table table-condensed table-striped"></table>
+            </div>
+            <script data-language="javascript" data-example-class="operator-equals">
+              // Load top ten switch hitters.
+              $('#media-hitters').sheetrock({
+                url: mySpreadsheet,
+                query: "select C,B,F,E,D,G where H = 'Yes' and (E like '%Times%') ",     
+                fetchSize: 5
+              });
+            </script>
+          </div>
+         
+          
+          
+          <div class="example-render-group" style="display:none">
+            <div data-language="markup" data-example-class="operator-plus">
+              <h4>Team RBI</h4>
+              <ol id="team-rbi">
+              <script id="team-rbi-template" type="text/x-handlebars-template">
+                <li><strong>{{cells.TeamName}}</strong>, {{cells.TeamRBI}}</li>
+              </script>
+              </ol>
+            </div>
+            <script data-language="javascript" data-example-class="operator-equals">
+              // Compile Handlebars template for team RBI leaders.
+              var RBITemplate = Handlebars.compile($('#team-rbi-template').html());
+              // Load top five team RBI leaders.
+              $('#team-rbi').sheetrock({
+                url: mySpreadsheet,
+                //query: "select A,sum(J) group by A order by sum(J) desc",
+                query: "select C,count(F) group by C order by count(F) desc",
+                fetchSize: 5,
+                labels: ['TeamName', 'TeamRBI'],
+                rowTemplate: RBITemplate
+              });
+         
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!--
+      This has nothing to do with Sheetrock, but if you’re interested, here’s
+      how the examples on this page were generated. There’s no mockup code:
+      everything is generated from the actual code that runs on this page.
+    -->
+  </body>
+
+</html>
